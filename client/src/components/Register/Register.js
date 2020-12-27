@@ -62,6 +62,7 @@ const styles = theme => ({
 });
 
 export class Register extends Component {
+	// 属性
 	static propTypes = {
 		classes: shape({
 			form: string,
@@ -70,7 +71,7 @@ export class Register extends Component {
 			actions: string
 		}).isRequired
 	};
-
+	// 构造函数
 	constructor(props) {
 		super(props);
 		const { registered } = props;
@@ -112,7 +113,7 @@ export class Register extends Component {
 			lastSaved: ''
 		};
 	}
-
+	// 设置组件属性
 	componentWillReceiveProps(nextProps) {
 		const { registered = [], error } = nextProps;
 		this.setState(() => ({
@@ -120,7 +121,7 @@ export class Register extends Component {
 			error
 		}));
 	}
-
+	// 处理状态变化
 	handleChange = event => {
 		const { target } = event;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -128,7 +129,7 @@ export class Register extends Component {
 		this.setState({
 			[name]: { value }
 		});
-
+		// 密码
 		let password2 = {};
 		if (name === 'password') {
 			if (
@@ -169,7 +170,7 @@ export class Register extends Component {
 			}
 		});
 	};
-
+	// 提交表单
 	submitForm = async e => {
 		e.preventDefault();
 
@@ -201,6 +202,7 @@ export class Register extends Component {
 		this.resetForm();
 		return true;
 	};
+	// 重置表单数据
 	resetForm() {
 		const user = {
 			error: null,
