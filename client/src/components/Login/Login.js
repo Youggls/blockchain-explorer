@@ -28,6 +28,7 @@ import { shape, string } from 'prop-types';
 import { authSelectors, authOperations } from '../../state/redux/auth';
 
 const styles = theme => ({
+	// 容器属性
 	container: {
 		width: 'auto',
 		display: 'block', // Fix IE 11 issue.
@@ -66,6 +67,7 @@ const styles = theme => ({
 });
 
 export class Login extends Component {
+	// 组件属性定义
 	static propTypes = {
 		classes: shape({
 			avatar: string,
@@ -75,7 +77,7 @@ export class Login extends Component {
 			submit: string
 		}).isRequired
 	};
-
+	// 构造函数
 	constructor(props) {
 		super(props);
 		const { networks = [] } = props;
@@ -101,7 +103,7 @@ export class Login extends Component {
 			isLoading: false
 		};
 	}
-
+	// 组件属性设置
 	componentWillReceiveProps(nextProps) {
 		const { networks = [] } = nextProps;
 		this.setState(() => ({
@@ -114,7 +116,7 @@ export class Login extends Component {
 			authEnabled: networks[0].authEnabled
 		}));
 	}
-
+	// 处理页面状态变化
 	handleChange = event => {
 		const { target } = event;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -133,11 +135,11 @@ export class Login extends Component {
 
 		this.setState(newState);
 	};
-
+	// 登录函数
 	async performLogin({ user, password, network }) {
 		const { login } = this.props;
 		const { authEnabled } = this.state;
-
+		// 调用登录方法
 		const info = await login(
 			{
 				user: authEnabled ? user : 'dummy-user',
@@ -147,13 +149,14 @@ export class Login extends Component {
 		);
 
 		this.setState(() => ({ info }));
+		// 判断返回值状态
 		if (info.status === 'Success') {
 			const { history } = this.props;
 			history.replace('/');
 			return true;
 		}
 	}
-
+	// 提交表单
 	submitForm = async e => {
 		e.preventDefault();
 
@@ -165,7 +168,7 @@ export class Login extends Component {
 			network: network.id
 		});
 	};
-
+	// 组件状态更新
 	async componentDidUpdate() {
 		const { networks, autoLoginAttempted } = this.state;
 
@@ -197,7 +200,7 @@ export class Login extends Component {
 			isLoading
 		} = this.state;
 		const { classes, error } = this.props;
-
+		// 页面元素
 		return (
 			<div className={classes.container}>
 				<Paper className={classes.paper}>
